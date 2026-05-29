@@ -5,16 +5,11 @@ import toast from "react-hot-toast";
 
 const AuthContext = createContext(null);
 
-// Sanitize raw server/token error messages into user-friendly ones
+// Sanitize only technical token/jwt jargon into user-friendly messages
 function sanitizeAuthError(message) {
   if (!message) return "Something went wrong. Please try again.";
   const lower = message.toLowerCase();
-  if (
-    lower.includes("token") ||
-    lower.includes("jwt") ||
-    lower.includes("session invalidated") ||
-    lower.includes("unauthorized")
-  ) {
+  if (lower.includes("token") || lower.includes("jwt")) {
     return "Your session has expired. Please log in again.";
   }
   return message;

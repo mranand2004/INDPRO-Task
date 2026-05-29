@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 
-// Sanitize any technical error messages before showing to user
+// Sanitize only technical token/jwt jargon — never override real auth errors
 function sanitizeError(message) {
   if (!message) return "Registration failed. Please try again.";
   const lower = message.toLowerCase();
-  if (lower.includes("token") || lower.includes("jwt") || lower.includes("unauthorized")) {
+  if (lower.includes("token") || lower.includes("jwt")) {
     return "Something went wrong. Please try again.";
   }
   return message;
