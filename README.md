@@ -10,6 +10,10 @@ A full-stack Task Manager application built with the MERN stack. Users can manag
 | Backend |  
 
 ---
+<img width="1919" height="823" alt="image" src="https://github.com/user-attachments/assets/105a934a-423b-404b-a558-e66c35b708dc" />
+
+<img width="1914" height="828" alt="image" src="https://github.com/user-attachments/assets/f9d574a3-e81b-44b2-a3f0-edef0ce5b51d" />
+
 
 ## Features
 
