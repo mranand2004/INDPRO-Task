@@ -6,8 +6,8 @@ A full-stack Task Manager application built with the MERN stack. Users can manag
 
 | Layer | URL |
 |-------|-----|
-| Frontend | _[Add your Vercel URL here]_ |
-| Backend | https://indpro-task.onrender.com |
+| Frontend | _[https://indpro-task-y55q.vercel.app/login]_ |
+| Backend |  
 
 ---
 
