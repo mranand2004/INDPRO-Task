@@ -59,6 +59,14 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
+    // Don't try to refresh for login/register — a 401 there means wrong credentials
+    if (
+      originalRequest.url === "/auth/login" ||
+      originalRequest.url === "/auth/register"
+    ) {
+      return Promise.reject(error);
+    }
+
     // If already refreshing, queue this request
     if (isRefreshing) {
       return new Promise((resolve, reject) => {
