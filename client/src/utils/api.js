@@ -95,7 +95,10 @@ api.interceptors.response.use(
       // Dispatch custom event so AuthContext can react
       window.dispatchEvent(new CustomEvent("auth:logout"));
 
-      return Promise.reject(refreshError);
+      // Create a clean user-facing error instead of leaking token details
+      const cleanError = new Error("Your session has expired. Please log in again.");
+      cleanError.response = { data: { message: "Your session has expired. Please log in again." } };
+      return Promise.reject(cleanError);
     } finally {
       isRefreshing = false;
     }

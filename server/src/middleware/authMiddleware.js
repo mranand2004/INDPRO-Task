@@ -11,13 +11,13 @@ const protect = async (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      throw ApiError.unauthorized("Access token is required");
+      throw ApiError.unauthorized("Please log in to continue.");
     }
 
     const token = authHeader.split(" ")[1];
 
     if (!token) {
-      throw ApiError.unauthorized("Access token is required");
+      throw ApiError.unauthorized("Please log in to continue.");
     }
 
     // Verify token
@@ -27,17 +27,17 @@ const protect = async (req, res, next) => {
     const user = await User.findById(decoded.id);
 
     if (!user) {
-      throw ApiError.unauthorized("User no longer exists");
+      throw ApiError.unauthorized("Account not found. Please log in again.");
     }
 
     req.user = user;
     next();
   } catch (error) {
     if (error.name === "TokenExpiredError") {
-      return next(ApiError.unauthorized("Access token expired"));
+      return next(ApiError.unauthorized("Your session has expired. Please log in again."));
     }
     if (error.name === "JsonWebTokenError") {
-      return next(ApiError.unauthorized("Invalid access token"));
+      return next(ApiError.unauthorized("Invalid session. Please log in again."));
     }
     next(error);
   }

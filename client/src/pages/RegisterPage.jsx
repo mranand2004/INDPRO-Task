@@ -3,6 +3,16 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 
+// Sanitize any technical error messages before showing to user
+function sanitizeError(message) {
+  if (!message) return "Registration failed. Please try again.";
+  const lower = message.toLowerCase();
+  if (lower.includes("token") || lower.includes("jwt") || lower.includes("unauthorized")) {
+    return "Something went wrong. Please try again.";
+  }
+  return message;
+}
+
 function getPasswordStrength(password) {
   if (!password) return { score: 0, label: "", color: "" };
   let score = 0;
@@ -82,11 +92,11 @@ function RegisterPage() {
     try {
       await register(formData.name.trim(), formData.email.trim().toLowerCase(), formData.password);
     } catch (error) {
-      const message =
+      const raw =
         error.response?.data?.message ||
         error.response?.data?.errors?.[0] ||
         "Registration failed. Please try again.";
-      toast.error(message);
+      toast.error(sanitizeError(raw));
     } finally {
       setLoading(false);
     }

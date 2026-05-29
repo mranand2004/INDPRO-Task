@@ -3,6 +3,16 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 
+// Sanitize any technical error messages before showing to user
+function sanitizeError(message) {
+  if (!message) return "Login failed. Please try again.";
+  const lower = message.toLowerCase();
+  if (lower.includes("token") || lower.includes("jwt") || lower.includes("unauthorized")) {
+    return "Your session has expired. Please log in again.";
+  }
+  return message;
+}
+
 function LoginPage() {
   const { login } = useAuth();
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -44,9 +54,8 @@ function LoginPage() {
     try {
       await login(formData.email.trim().toLowerCase(), formData.password);
     } catch (error) {
-      const message =
-        error.response?.data?.message || "Login failed. Please try again.";
-      toast.error(message);
+      const raw = error.response?.data?.message || "Login failed. Please try again.";
+      toast.error(sanitizeError(raw));
       // Clear password on failed login for security
       setFormData((prev) => ({ ...prev, password: "" }));
     } finally {

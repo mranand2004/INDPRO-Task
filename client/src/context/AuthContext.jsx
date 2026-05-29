@@ -5,6 +5,21 @@ import toast from "react-hot-toast";
 
 const AuthContext = createContext(null);
 
+// Sanitize raw server/token error messages into user-friendly ones
+function sanitizeAuthError(message) {
+  if (!message) return "Something went wrong. Please try again.";
+  const lower = message.toLowerCase();
+  if (
+    lower.includes("token") ||
+    lower.includes("jwt") ||
+    lower.includes("session invalidated") ||
+    lower.includes("unauthorized")
+  ) {
+    return "Your session has expired. Please log in again.";
+  }
+  return message;
+}
+
 // Safe localStorage read — prevents crash on corrupted data
 function safeGetUser() {
   try {

@@ -125,7 +125,7 @@ const refreshAccessToken = async (req, res, next) => {
     const incomingRefreshToken = req.cookies[REFRESH_TOKEN_COOKIE];
 
     if (!incomingRefreshToken) {
-      throw ApiError.unauthorized("Refresh token not found");
+      throw ApiError.unauthorized("Your session has expired. Please log in again.");
     }
 
     // Verify the refresh token
@@ -135,14 +135,14 @@ const refreshAccessToken = async (req, res, next) => {
     } catch (error) {
       // If token is expired or invalid, clear cookie
       res.clearCookie(REFRESH_TOKEN_COOKIE, getClearCookieOptions());
-      throw ApiError.unauthorized("Invalid or expired refresh token");
+      throw ApiError.unauthorized("Your session has expired. Please log in again.");
     }
 
     // Find user and check if this refresh token exists in their stored tokens
     const user = await User.findById(decoded.id).select("+refreshTokens");
 
     if (!user) {
-      throw ApiError.unauthorized("User not found");
+      throw ApiError.unauthorized("Account not found. Please log in again.");
     }
 
     // Check if the incoming token is in the user's stored tokens
@@ -154,7 +154,7 @@ const refreshAccessToken = async (req, res, next) => {
       await User.findByIdAndUpdate(user._id, { refreshTokens: [] });
       res.clearCookie(REFRESH_TOKEN_COOKIE, getClearCookieOptions());
       throw ApiError.unauthorized(
-        "Token reuse detected. All sessions invalidated. Please login again."
+        "Your session is no longer valid. Please log in again."
       );
     }
 
