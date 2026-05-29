@@ -7,7 +7,7 @@ A full-stack Task Manager application built with the MERN stack. Users can manag
 | Layer | URL |
 |-------|-----|
 | Frontend | _[Add your Vercel URL here]_ |
-| Backend | _[Add your Render URL here]_ |
+| Backend | https://indpro-task.onrender.com |
 
 ---
 
@@ -182,7 +182,8 @@ This starts both frontend (http://localhost:3000) and backend (http://localhost:
 | **Vite over CRA** | Faster dev server (ESM-based), smaller production bundles, modern tooling. |
 | **express-validator** | Declarative validation at route level, cleaner than manual checks in controllers. |
 | **Compound MongoDB index** | `{ user: 1, createdAt: -1 }` optimizes the primary query pattern (user's tasks, newest first). |
-| **No drag-and-drop** | Kept scope focused on core requirements. Stage change via dropdown is functional and accessible. |
+| **HTML5 Drag-and-Drop** | Native API used for stage changes instead of libraries to keep bundle lightweight. |
+| **Dark Mode** | Dynamic theme toggling via CSS variables persisted to localStorage. |
 
 ---
 
@@ -198,10 +199,8 @@ This starts both frontend (http://localhost:3000) and backend (http://localhost:
 
 ## What I'd Add With More Time
 
-- Drag-and-drop between columns (react-beautiful-dnd or dnd-kit)
 - Task priority levels and due dates
 - Search and filter tasks
-- Dark mode toggle
 - Rate limiting on auth endpoints
 - Email verification on registration
 - Password reset flow
