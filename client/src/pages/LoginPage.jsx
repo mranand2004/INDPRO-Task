@@ -150,7 +150,7 @@ function LoginPage() {
 
         <p className="auth-footer">
           Don&apos;t have an account?{" "}
-          <Link to="/register">Create one</Link>
+          <Link to="/register">Create Account</Link>
         </p>
       </div>
     </div>
